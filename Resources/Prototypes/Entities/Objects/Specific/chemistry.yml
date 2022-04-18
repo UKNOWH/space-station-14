@@ -273,6 +273,9 @@
     solutions:
       food:
         maxVol: 50
+  - type: Extractable
+    grindableSolutionName: medicine
+    #trying to make that you can grind a pill to test for its substances
 
 - type: entity
   name: pill canister
