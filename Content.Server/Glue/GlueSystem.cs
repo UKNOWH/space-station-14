@@ -2,6 +2,7 @@
 using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Robust.Shared.Player;
 
@@ -19,6 +20,21 @@ public sealed class GlueSystem : EntitySystem
         SubscribeLocalEvent<GlueComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<GlueDoAfterComplete>(OnDoAfterComplete);
         SubscribeLocalEvent<GlueDoAfterCancelled>(OnDoAfterCancelled);
+        SubscribeLocalEvent<GlueComponent, ExaminedEvent>(OnGlueExamined);
+    }
+
+    private void OnGlueExamined(EntityUid uid, GlueComponent component, ExaminedEvent args)
+    {
+        if (args.IsInDetailsRange)
+        {
+            args.PushMarkup(
+                Loc.GetString(
+                    "flash-component-examine-detail-count",
+                    ("count", component.UsesLeft),
+                    ("markupCountColor", "green")
+                )
+            );
+        }
     }
 
     private void OnActivate(EntityUid uid, GlueComponent component, ActivateInWorldEvent args)
