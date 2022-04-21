@@ -4,3 +4,4 @@ glue-component-examine-detail-count = The glue has [color={$markupCountColor}]{$
     [one] use
     *[other] uses
 } remaining.
+glue-incompatible = you cannot apply this glue to the entity
