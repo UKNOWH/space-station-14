@@ -21,3 +21,21 @@
       stickDelay: 5
       unstickDelay: 1
       applyDelay: 3
+
+- type: entity
+  parent: BaseGlue
+  id: GlueAdmin
+  name: admin glue
+  description: insta apply , insta stick , insta unstick. What else could you ask for?
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/airlock_painter.rsi
+      state: airlock_painter
+      netsync: false
+    - type: Item
+      sprite: Objects/Tools/airlock_painter.rsi
+    - type: Glue
+      usesLeft: 99999
+      stickDelay: 0
+      unstickDelay: 0
+      applyDelay: 0
