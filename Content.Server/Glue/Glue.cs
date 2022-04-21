@@ -3,6 +3,10 @@ namespace Content.Server.Glue;
 [RegisterComponent]
 public sealed class GlueComponent : Component
 {
+    [DataField("usesLeft")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public int UsesLeft = 10;
+
     [DataField("stickDelay")]
     [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan GlueStickDelay = TimeSpan.Zero;
@@ -13,5 +17,8 @@ public sealed class GlueComponent : Component
 
     [DataField("applyDelay")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan ApplyDelay = TimeSpan.Zero;
+    public float ApplyDelay = 0f;
+
+    [DataField("isApplying")]
+    public bool IsApplying = false;
 }

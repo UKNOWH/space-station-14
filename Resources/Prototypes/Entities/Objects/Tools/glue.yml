@@ -17,6 +17,7 @@
     - type: Item
       sprite: Objects/Tools/airlock_painter.rsi
     - type: Glue
+      usesLeft: 10
       stickDelay: 5
       unstickDelay: 1
       applyDelay: 3
