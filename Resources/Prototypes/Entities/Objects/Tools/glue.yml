@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  name: "Glue"
+  id: BaseGlue
+  abstract: true
+
+- type: entity
+  parent: BaseGlue
+  id: GlueWeak
+  name: cheap glue
+  description: the semi-transperent cheap glue your elementry school provides
+  components:
+    - type: Sprite
+      sprite: Objects/Tools/airlock_painter.rsi
+      state: airlock_painter
+      netsync: false
+    - type: Item
+      sprite: Objects/Tools/airlock_painter.rsi
+    - type: Glue
+      stickDelay: 5
+      unstickDelay: 1
+      applyDelay: 3
