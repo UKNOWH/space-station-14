@@ -29,7 +29,7 @@ public sealed class GlueSystem : EntitySystem
         {
             args.PushMarkup(
                 Loc.GetString(
-                    "flash-component-examine-detail-count",
+                    "glue-component-examine-detail-count",
                     ("count", component.UsesLeft),
                     ("markupCountColor", "green")
                 )
