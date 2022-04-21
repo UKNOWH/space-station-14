@@ -46,7 +46,7 @@ public sealed class GlueSystem : EntitySystem
         newComp.StickDelay = ev.Component.GlueStickDelay;
         newComp.UnstickDelay = ev.Component.GlueUnstickDelay;
         ev.Component.UsesLeft --;
-        string msg = Loc.GetString("glue-applied" + ev.Target);
+        var msg = Loc.GetString("glue-applied" + ev.Target);
         _popupSystem.PopupEntity(msg, ev.User, Filter.Entities(ev.User));
     }
 
@@ -66,7 +66,7 @@ public sealed class GlueSystem : EntitySystem
     }
     private void OnAfterInteract(EntityUid uid, GlueComponent component, AfterInteractEvent args)
     {
-        if (component.IsApplying || args.Target != null ||EntityManager.HasComponent<StickyComponent>(args.Target)) return;
+        if (component.IsApplying || args.Target == null ||EntityManager.HasComponent<StickyComponent>(args.Target)) return;
         component.IsApplying = true;
 
         var doAfterEventArgs = new DoAfterEventArgs(args.User, component.ApplyDelay, default, args.Target)
