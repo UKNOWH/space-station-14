@@ -1,4 +1,4 @@
-namespace Content.Shared.Glue;
+namespace Content.Server.Glue;
 
 [RegisterComponent]
 public sealed class GlueComponent : Component
