@@ -83,7 +83,13 @@ public sealed class GlueSystem : EntitySystem
     }
     private void OnAfterInteract(EntityUid uid, GlueComponent component, AfterInteractEvent args)
     {
-        if (component.IsApplying || args.Target == null || EntityManager.HasComponent<StickyComponent>(args.Target)) return;
+        if (component.IsApplying || args.Target == null || EntityManager.HasComponent<StickyComponent>(args.Target) || !args.CanReach) return;
+        if (component.Whitelist != null && !component.Whitelist.IsValid(uid))
+        {
+            var msg = Loc.GetString("glue-incompatible");
+            _popupSystem.PopupEntity(msg, args.User, Filter.Entities(args.User));
+            return;
+        }
         if (component.UsesLeft == 0)
         {
             var msg = Loc.GetString("glue-out");

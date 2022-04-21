@@ -1,3 +1,5 @@
+using Content.Shared.Whitelist;
+
 namespace Content.Server.Glue;
 
 [RegisterComponent]
@@ -21,4 +23,10 @@ public sealed class GlueComponent : Component
 
     [DataField("isApplying")]
     public bool IsApplying = false;
+
+    [DataField("whitelist")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public EntityWhitelist? Whitelist;
+
+
 }

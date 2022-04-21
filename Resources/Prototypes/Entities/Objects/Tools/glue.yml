@@ -39,3 +39,6 @@
       stickDelay: 0
       unstickDelay: 0
       applyDelay: 0
+      whitelist:
+        tags:
+        - item
