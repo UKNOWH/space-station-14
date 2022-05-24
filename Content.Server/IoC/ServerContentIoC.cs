@@ -9,7 +9,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Connection;
 using Content.Server.Database;
 using Content.Server.EUI;
-using Content.Server.GhostKick;
 using Content.Server.Info;
 using Content.Server.Maps;
 using Content.Server.Module;
@@ -53,7 +52,6 @@ namespace Content.Server.IoC
             IoCManager.Register<RoleBanManager, RoleBanManager>();
             IoCManager.Register<NetworkResourceManager>();
             IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
-            IoCManager.Register<GhostKickManager>();
         }
     }
 }

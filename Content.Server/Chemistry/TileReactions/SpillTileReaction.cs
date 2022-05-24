@@ -4,7 +4,6 @@ using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Slippery;
-using Content.Shared.StepTrigger;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 
@@ -29,10 +28,9 @@ namespace Content.Server.Chemistry.TileReactions
 
             if (puddle != null)
             {
-                var entityManager = IoCManager.Resolve<IEntityManager>();
-                var slippery = entityManager.GetComponent<SlipperyComponent>(puddle.Owner);
+                var slippery = IoCManager.Resolve<IEntityManager>().GetComponent<SlipperyComponent>(puddle.Owner);
                 slippery.LaunchForwardsMultiplier = _launchForwardsMultiplier;
-                EntitySystem.Get<StepTriggerSystem>().SetRequiredTriggerSpeed(puddle.Owner, _requiredSlipSpeed);
+                slippery.RequiredSlipSpeed = _requiredSlipSpeed;
                 slippery.ParalyzeTime = _paralyzeTime;
 
                 return reactVolume;

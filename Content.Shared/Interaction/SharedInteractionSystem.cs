@@ -192,9 +192,7 @@ namespace Content.Shared.Interaction
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
             if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                // Wide attack if there isn't a target or the target is out of range, click attack otherwise.
-                var shouldWideAttack = target == null || !InRangeUnobstructed(user, target.Value);
-                DoAttack(user, coordinates, shouldWideAttack, target);
+                DoAttack(user, coordinates, false, target);
                 return;
             }
 

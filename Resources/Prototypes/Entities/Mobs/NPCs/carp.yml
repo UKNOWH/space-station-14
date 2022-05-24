@@ -68,8 +68,6 @@
       Otherwise, wreak havoc on the station!
   - type: ReplacementAccent
     accent: genericAggressive
-  - type: TypingIndicator
-    proto: alien
   - type: NoSlip
 
 - type: entity
@@ -86,8 +84,6 @@
       sprite: Mobs/Aliens/Carps/magic.rsi
   - type: GhostTakeoverAvailable
     name: magicarp
-  - type: TypingIndicator
-    proto: guardian
 
 - type: entity
   name: holocarp
@@ -114,8 +110,6 @@
       - Opaque
   - type: GhostTakeoverAvailable
     name: holocarp
-  - type: TypingIndicator
-    proto: robot
 
 - type: entity
   id: MobCarpSalvage

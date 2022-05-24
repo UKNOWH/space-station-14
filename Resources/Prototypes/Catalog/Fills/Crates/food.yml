@@ -40,7 +40,5 @@
       amount: 1
     - id: FoodCondimentBottleEnzyme
       amount: 1
-    - id: FoodBowlBig
-      amount: 3
-    - id: KitchenKnife
+    - id: LargeBeaker
       amount: 1

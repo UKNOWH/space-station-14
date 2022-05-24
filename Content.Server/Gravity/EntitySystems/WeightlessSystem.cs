@@ -1,7 +1,6 @@
 using Content.Shared.Alert;
 using Content.Shared.GameTicking;
 using Content.Shared.Gravity;
-using Content.Shared.Movement.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Utility;
@@ -22,7 +21,7 @@ namespace Content.Server.Gravity.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
-            SubscribeLocalEvent<AlertsComponent, EntParentChangedMessage>(EntParentChanged);
+            SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
             SubscribeLocalEvent<AlertsComponent, AlertSyncEvent>(HandleAlertSyncEvent);
         }
 
@@ -33,12 +32,12 @@ namespace Content.Server.Gravity.EntitySystems
 
         public void AddAlert(AlertsComponent status)
         {
-            var xform = Transform(status.Owner);
-            var alerts = _alerts.GetOrNew(xform.GridID);
+            var gridId = EntityManager.GetComponent<TransformComponent>(status.Owner).GridID;
+            var alerts = _alerts.GetOrNew(gridId);
 
             alerts.Add(status);
 
-            if (_mapManager.TryGetGrid(xform.GridID, out var grid))
+            if (_mapManager.TryGetGrid(EntityManager.GetComponent<TransformComponent>(status.Owner).GridID, out var grid))
             {
                 if (EntityManager.GetComponent<GravityComponent>(grid.GridEntityId).Enabled)
                 {
@@ -95,9 +94,13 @@ namespace Content.Server.Gravity.EntitySystems
             _alertsSystem.ClearAlert(euid, AlertType.Weightless);
         }
 
-        private void EntParentChanged(EntityUid uid, AlertsComponent status, ref EntParentChangedMessage ev)
+        private void EntParentChanged(ref EntParentChangedMessage ev)
         {
-            // First, update the `_alerts` dictionary
+            if (!EntityManager.TryGetComponent(ev.Entity, out AlertsComponent? status))
+            {
+                return;
+            }
+
             if (ev.OldParent is {Valid: true} old &&
                 EntityManager.TryGetComponent(old, out IMapGridComponent? mapGrid))
             {
@@ -109,21 +112,10 @@ namespace Content.Server.Gravity.EntitySystems
                 }
             }
 
-            var newGrid = ev.Transform.GridID;
+            var newGrid = EntityManager.GetComponent<TransformComponent>(ev.Entity).GridID;
             var newStatuses = _alerts.GetOrNew(newGrid);
 
             newStatuses.Add(status);
-
-            // then update the actual alert. The alert is only removed if either the player is on a grid with gravity,
-            // or if they ignore gravity-based movement altogether.
-            // TODO: update this when planets and the like are added.
-            // TODO: update alert when the ignore-gravity component is added or removed.
-            if (_mapManager.TryGetGrid(newGrid, out var grid)
-                && TryComp(grid.GridEntityId, out GravityComponent? gravity)
-                && gravity.Enabled)
-                RemoveWeightless(status.Owner);
-            else if (!HasComp<MovementIgnoreGravityComponent>(uid))
-                AddWeightless(status.Owner);
         }
 
         private void HandleAlertSyncEvent(EntityUid uid, AlertsComponent component, AlertSyncEvent args)

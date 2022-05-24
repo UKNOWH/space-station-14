@@ -114,7 +114,7 @@ namespace Content.Server.Disposal.Tube
         private static void BodyTypeChanged(
             EntityUid uid,
             DisposalTubeComponent component,
-            ref PhysicsBodyTypeChangedEvent args)
+            PhysicsBodyTypeChangedEvent args)
         {
             component.AnchoredChanged();
         }

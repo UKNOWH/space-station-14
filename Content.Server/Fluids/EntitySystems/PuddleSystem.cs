@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
-using Content.Shared.StepTrigger;
+using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -16,7 +16,6 @@ namespace Content.Server.Fluids.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly FluidSpreaderSystem _fluidSpreaderSystem = default!;
-        [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
 
         public override void Initialize()
         {
@@ -72,20 +71,20 @@ namespace Content.Server.Fluids.EntitySystems
         {
             if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
                  puddleComponent.CurrentVolume < puddleComponent.SlipThreshold) &&
-                TryComp(entityUid, out StepTriggerComponent? stepTrigger))
+                EntityManager.TryGetComponent(entityUid, out SlipperyComponent? oldSlippery))
             {
-                _stepTrigger.SetActive(entityUid, false, stepTrigger);
+                oldSlippery.Slippery = false;
             }
             else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
             {
-                var comp = EnsureComp<StepTriggerComponent>(entityUid);
-                _stepTrigger.SetActive(entityUid, true, comp);
+                var newSlippery = EntityManager.EnsureComponent<SlipperyComponent>(entityUid);
+                newSlippery.Slippery = true;
             }
         }
 
         private void HandlePuddleExamined(EntityUid uid, PuddleComponent component, ExaminedEvent args)
         {
-            if (TryComp<StepTriggerComponent>(uid, out var slippery) && slippery.Active)
+            if (EntityManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
             {
                 args.PushText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }

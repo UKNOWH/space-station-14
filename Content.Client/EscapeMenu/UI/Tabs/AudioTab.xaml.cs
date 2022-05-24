@@ -22,8 +22,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             IoCManager.InjectDependencies(this);
 
             LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
-            StationAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.StationAmbienceEnabled);
-            SpaceAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.SpaceAmbienceEnabled);
 
             ApplyButton.OnPressed += OnApplyButtonPressed;
             ResetButton.OnPressed += OnResetButtonPressed;
@@ -32,8 +30,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AmbienceVolumeSlider.OnValueChanged += OnAmbienceVolumeSliderChanged;
             AmbienceSoundsSlider.OnValueChanged += OnAmbienceSoundsSliderChanged;
             LobbyMusicCheckBox.OnToggled += OnLobbyMusicCheckToggled;
-            StationAmbienceCheckBox.OnToggled += OnStationAmbienceCheckToggled;
-            SpaceAmbienceCheckBox.OnToggled += OnSpaceAmbienceCheckToggled;
 
             AmbienceSoundsSlider.MinValue = _cfg.GetCVar(CCVars.MinMaxAmbientSourcesConfigured);
             AmbienceSoundsSlider.MaxValue = _cfg.GetCVar(CCVars.MaxMaxAmbientSourcesConfigured);
@@ -77,16 +73,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             UpdateChanges();
         }
 
-        private void OnStationAmbienceCheckToggled(BaseButton.ButtonEventArgs args)
-        {
-            UpdateChanges();
-        }
-
-        private void OnSpaceAmbienceCheckToggled(BaseButton.ButtonEventArgs args)
-        {
-            UpdateChanges();
-        }
-
         private void OnApplyButtonPressed(BaseButton.ButtonEventArgs args)
         {
             _cfg.SetCVar(CVars.AudioMasterVolume, MasterVolumeSlider.Value / 100);
@@ -94,8 +80,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             _cfg.SetCVar(CCVars.AmbienceVolume, LV100ToDB(AmbienceVolumeSlider.Value));
             _cfg.SetCVar(CCVars.MaxAmbientSources, (int)AmbienceSoundsSlider.Value);
             _cfg.SetCVar(CCVars.LobbyMusicEnabled, LobbyMusicCheckBox.Pressed);
-            _cfg.SetCVar(CCVars.StationAmbienceEnabled, StationAmbienceCheckBox.Pressed);
-            _cfg.SetCVar(CCVars.SpaceAmbienceEnabled, SpaceAmbienceCheckBox.Pressed);
             _cfg.SaveToFile();
             UpdateChanges();
         }
@@ -112,8 +96,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AmbienceVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CCVars.AmbienceVolume));
             AmbienceSoundsSlider.Value = _cfg.GetCVar(CCVars.MaxAmbientSources);
             LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
-            StationAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.StationAmbienceEnabled);
-            SpaceAmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.SpaceAmbienceEnabled);
             UpdateChanges();
         }
 
@@ -140,9 +122,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 Math.Abs(AmbienceVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CCVars.AmbienceVolume))) < 0.01f;
             var isAmbientSoundsSame = (int)AmbienceSoundsSlider.Value == _cfg.GetCVar(CCVars.MaxAmbientSources);
             var isLobbySame = LobbyMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.LobbyMusicEnabled);
-            var isStationAmbienceSame = StationAmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.StationAmbienceEnabled);
-            var isSpaceAmbienceSame = SpaceAmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.SpaceAmbienceEnabled);
-            var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbientVolumeSame && isAmbientSoundsSame && isLobbySame && isStationAmbienceSame && isSpaceAmbienceSame;
+            var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbientVolumeSame && isAmbientSoundsSame && isLobbySame;
             ApplyButton.Disabled = isEverythingSame;
             ResetButton.Disabled = isEverythingSame;
             MasterVolumeLabel.Text =

@@ -81,16 +81,6 @@
 
 - type: entity
   parent: DrinkBaseCup
-  id: DrinkMugDog
-  name: funny dog mug
-  description: It looks like a cartoon beagle.
-  components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/mug_dog.rsi
-    state: icon-3
-
-- type: entity
-  parent: DrinkBaseCup
   id: DrinkMugHeart
   name: mug heart
   description: A white mug, it prominently features a red heart.
@@ -170,7 +160,9 @@
       drink:
         reagents:
         - ReagentId: Coffee
-          Quantity: 20
+          Quantity: 19
+        - ReagentId: Theobromine
+          Quantity: 1
         maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hot_coffee.rsi
@@ -186,7 +178,9 @@
       drink:
         reagents:
         - ReagentId: Tea
-          Quantity: 20
+          Quantity: 19
+        - ReagentId: Theobromine
+          Quantity: 1
         maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teacup.rsi

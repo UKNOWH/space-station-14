@@ -17,7 +17,7 @@
       - MobMouse2
 
 - type: entity
-  name: Ian Spawner
+  name: Corgi Spawner
   id: SpawnMobCorgi
   parent: MarkerBase
   components:
@@ -27,7 +27,8 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MobCorgiIan
+      - MobCorgi
+      - MobCorgiOld
 
 - type: entity
   name: Possum Morty Spawner

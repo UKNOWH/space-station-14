@@ -31,7 +31,7 @@
     fixtures:
     - shape:
         !type:PhysShapeCircle
-        radius: 0.25
+        radius: 0.35
       mass: 120
       mask:
       - MobMask
@@ -79,8 +79,6 @@
     rules: You are an antagonist, smack, slash, and wack!
   - type: ReplacementAccent
     accent: xeno
-  - type: TypingIndicator
-    proto: alien
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: -150
@@ -88,8 +86,6 @@
   - type: Tag
     tags:
       - CannotSuicide
-      - DoorBumpOpener
-      - FootstepSound
   - type: NoSlip
 
 - type: entity

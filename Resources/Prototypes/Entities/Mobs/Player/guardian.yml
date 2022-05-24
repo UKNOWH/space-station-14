@@ -56,8 +56,6 @@
   - type: Internals
   - type: Examiner
   - type: Speech
-  - type: TypingIndicator
-    proto: guardian
   - type: Pullable
   - type: UnarmedCombat
     range: 2
@@ -91,8 +89,6 @@
     description: Listen to your owner. Don't tank damage. Punch people hard.
   - type: NameIdentifier
     group: Holoparasite
-  - type: TypingIndicator
-    proto: holo
   - type: Sprite
     layers:
     - state: tech_base
